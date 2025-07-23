@@ -233,6 +233,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 15px 15px 0 0;
+            transition: opacity 0.5s ease-in-out;
         }
 
         .hero-nav {
@@ -830,16 +831,16 @@
         <main class="main-content">
             <!-- Hero Section -->
             <section class="hero-section">
-                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0X4NNHCD87N91NKE43KH0.JPG" alt="ديارا المروج" class="hero-image">
+                <img id="heroImage" src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0X4NNHCD87N91NKE43KH0.JPG" alt="ديارا المروج" class="hero-image">
                 
                 <div class="hero-nav">
-                    <button class="nav-arrow">
+                    <button class="nav-arrow" onclick="previousImage()">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                     <button class="accessibility-btn">
                         <i class="fas fa-wheelchair"></i>
                     </button>
-                    <button class="nav-arrow">
+                    <button class="nav-arrow" onclick="nextImage()">
                         <i class="fas fa-chevron-left"></i>
                     </button>
                 </div>
@@ -978,8 +979,33 @@
                         الرياض - المروج
                     </div>
                     <div class="map-container">
-                        <div class="map-placeholder">
-                            <i class="fas fa-map-marker-alt" style="font-size: 48px;"></i>
+                        <div style="position: relative; width: 100%; height: 100%; background: #f0f9ff; border-radius: 10px; overflow: hidden;">
+                            <!-- خريطة تفاعلية -->
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.5539829662616!2d46.67387008667!3d24.754314133091!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2efb6b9b6b6b6b%3A0x6b6b6b6b6b6b6b6b!2z2K_Zitin2LHYpyDYp9mE2YXYsdmI2Kw!5e0!3m2!1sar!2ssa!4v1640000000000!5m2!1sar!2ssa"
+                                width="100%" 
+                                height="100%" 
+                                style="border:0; border-radius: 10px;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="موقع ديارا المروج">
+                            </iframe>
+                            
+                            <!-- زر فتح في Google Maps -->
+                            <div style="position: absolute; top: 10px; left: 10px; z-index: 10;">
+                                <a href="https://www.google.com/maps/place/24%C2%B045'15.5%22N+46%C2%B040'25.9%22E/@24.7543141,46.6760588,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.7543141!4d46.6738701?entry=ttu&g_ep=EgoyMDI1MDcyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="background: rgba(255, 255, 255, 0.9); color: #1e40af; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border: 1px solid #e0e0e0;">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    فتح في Google Maps
+                                </a>
+                            </div>
+                            
+                            <!-- عنوان المشروع على الخريطة -->
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.95); padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.2); text-align: center; pointer-events: none;">
+                                <div style="color: #1e40af; font-weight: bold; margin-bottom: 3px;">ديارا المروج</div>
+                                <div style="color: #666; font-size: 12px;">الرياض - المروج</div>
+                                <div style="position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid rgba(255, 255, 255, 0.95);"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1126,6 +1152,37 @@
 
     <script>
         let selectedUnit = 'الوحدة الأولى';
+        
+        // Hero image slider
+        const heroImages = [
+            'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0X4NNHCD87N91NKE43KH0.JPG',
+            'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0XAHMVP6AGD0AHH1KT22G.JPG',
+            'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0XHGGNVHMXK8FEY8AZ0QC.JPG',
+            'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0XQAV7E56PYRXE1B8NT30.JPG',
+            'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0XV1PCQJVCG0HBHRB1GM2.JPG'
+        ];
+        
+        let currentImageIndex = 0;
+        
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+            updateHeroImage();
+        }
+        
+        function previousImage() {
+            currentImageIndex = (currentImageIndex - 1 + heroImages.length) % heroImages.length;
+            updateHeroImage();
+        }
+        
+        function updateHeroImage() {
+            const heroImage = document.getElementById('heroImage');
+            heroImage.style.opacity = '0';
+            
+            setTimeout(() => {
+                heroImage.src = heroImages[currentImageIndex];
+                heroImage.style.opacity = '1';
+            }, 250);
+        }
 
         function openWhatsApp() {
             const phoneNumber = '966571653884';
