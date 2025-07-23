@@ -16,11 +16,11 @@
         
         body {
             font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
+            background: #ffffff;
             min-height: 100vh;
-            color: #333;
+            color: #000000;
             line-height: 1.7;
-            font-weight: 400;
+            font-weight: 500;
             position: relative;
         }
 
@@ -40,7 +40,7 @@
         }
 
         .header {
-            background: #e5e5e5;
+            background: #d1d5db;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 15px 0;
             position: sticky;
@@ -62,7 +62,7 @@
             align-items: center;
             gap: 10px;
             font-weight: bold;
-            color: #1e40af;
+            color: white;
         }
 
         .logo-image {
@@ -91,23 +91,28 @@
 
         .nav-menu a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
+            color: #000000;
             font-size: 15px;
+            font-weight: 500;
             transition: color 0.3s;
         }
 
         .nav-menu a:hover {
-            color: #1e40af;
+            color: #374151;
         }
 
         .search-box {
-            background: #f5f5f5;
-            border: none;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,0,0,0.2);
             padding: 8px 15px;
             border-radius: 20px;
             width: 200px;
             outline: none;
+            color: #000000;
+        }
+
+        .search-box::placeholder {
+            color: rgba(0,0,0,0.6);
         }
 
         .main-container {
@@ -143,10 +148,10 @@
         }
 
         .property-specs h3 {
-            color: #1e40af;
+            color: #000000;
             margin-bottom: 20px;
             font-size: 19px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .spec-grid {
@@ -160,11 +165,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #666;
+            color: #000000;
+            font-weight: 600;
         }
 
         .spec-item i {
-            color: #1e40af;
+            color: #000000;
             width: 16px;
         }
 
@@ -181,25 +187,25 @@
         }
 
         .spec-label {
-            color: #666;
-            font-size: 15px;
-            font-weight: 400;
+            color: #000000;
+            font-size: 16px;
+            font-weight: 500;
         }
 
         .spec-value {
-            font-weight: 600;
-            color: #333;
-            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+            font-size: 16px;
         }
 
         .price {
-            color: #1d4ed8;
+            color: #000000;
             font-size: 20px;
             font-weight: bold;
         }
 
         .interest-btn {
-            background: #1e40af;
+            background: #000000;
             color: white;
             border: none;
             padding: 15px;
@@ -217,7 +223,7 @@
         }
 
         .interest-btn:hover {
-            background: #1e3a8a;
+            background: #374151;
         }
 
         .main-content {
@@ -270,7 +276,7 @@
         }
 
         .accessibility-btn {
-            background: rgba(30,64,175,0.8);
+            background: rgba(0,0,0,0.8);
             color: white;
             border: none;
             padding: 8px 12px;
@@ -291,14 +297,14 @@
         .property-title {
             font-size: 20px;
             font-weight: 700;
-            color: #1e40af;
+            color: #000000;
             margin-bottom: 5px;
         }
 
         .property-location {
-            color: #666;
+            color: #000000;
             font-size: 15px;
-            font-weight: 400;
+            font-weight: 500;
         }
 
         .content-section {
@@ -306,11 +312,11 @@
         }
 
         .property-description {
-            color: #555;
+            color: #000000;
             line-height: 1.8;
             margin-bottom: 30px;
-            font-size: 16px;
-            font-weight: 400;
+            font-size: 17px;
+            font-weight: 500;
         }
 
         .floor-plans {
@@ -318,10 +324,10 @@
         }
 
         .floor-plans h3 {
-            color: #1e40af;
+            color: #000000;
             margin-bottom: 20px;
             font-size: 20px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .plans-grid {
@@ -358,21 +364,22 @@
         }
 
         .plan-title {
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 10px;
-            color: #1e40af;
+            color: #000000;
             font-size: 16px;
         }
 
         .plan-specs {
             display: flex;
             justify-content: space-between;
-            color: #666;
-            font-size: 14px;
+            color: #000000;
+            font-size: 15px;
+            font-weight: 600;
         }
 
         .plan-price {
-            color: #1d4ed8;
+            color: #000000;
             font-weight: bold;
             margin-top: 10px;
         }
@@ -385,10 +392,10 @@
         }
 
         .features-column h3 {
-            color: #1e40af;
+            color: #000000;
             margin-bottom: 20px;
             font-size: 20px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .features-grid {
@@ -415,7 +422,7 @@
         .feature-icon {
             width: 50px;
             height: 50px;
-            background: #1e40af;
+            background: #000000;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -426,16 +433,16 @@
         }
 
         .feature-title {
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 5px;
-            color: #333;
-            font-size: 15px;
+            color: #000000;
+            font-size: 16px;
         }
 
         .feature-subtitle {
-            font-size: 13px;
-            color: #666;
-            font-weight: 400;
+            font-size: 14px;
+            color: #000000;
+            font-weight: 500;
         }
 
         .map-section {
@@ -443,9 +450,10 @@
         }
 
         .map-section h3 {
-            color: #1e40af;
+            color: #000000;
             margin-bottom: 20px;
             font-size: 18px;
+            font-weight: 700;
         }
 
         .map-container {
@@ -463,8 +471,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1e40af;
+            color: #000000;
             font-size: 16px;
+            font-weight: 600;
         }
 
         .nearby-landmarks {
@@ -472,9 +481,10 @@
         }
 
         .nearby-landmarks h3 {
-            color: #1e40af;
+            color: #000000;
             margin-bottom: 20px;
             font-size: 18px;
+            font-weight: 700;
         }
 
         .landmarks-grid {
@@ -495,7 +505,7 @@
         .landmark-icon {
             width: 30px;
             height: 30px;
-            background: #1e40af;
+            background: #000000;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -509,14 +519,15 @@
         }
 
         .landmark-name {
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
+            font-weight: 700;
+            color: #000000;
+            font-size: 15px;
         }
 
         .landmark-distance {
-            color: #666;
-            font-size: 12px;
+            color: #000000;
+            font-size: 13px;
+            font-weight: 500;
         }
 
         .whatsapp-btn {
@@ -629,8 +640,8 @@
         .form-label {
             display: block;
             margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
+            color: #000000;
+            font-weight: 600;
         }
 
         .form-input {
@@ -687,7 +698,8 @@
         .radio-item label {
             margin: 0;
             cursor: pointer;
-            color: #666;
+            color: #000000;
+            font-weight: 500;
         }
 
         .submit-btn {
@@ -761,7 +773,6 @@
         <div class="nav-container">
             <div class="logo">
                 <img src="https://i.postimg.cc/vmZBsNWw/1.png" alt="داعم" class="logo-image">
-                <span>داعم</span>
             </div>
             
             <nav>
@@ -781,7 +792,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="property-logo">
-                <div class="logo-icon" style="width: 30px; height: 30px; font-size: 14px;">
+                <div style="width: 30px; height: 30px; background: #000000; color: white; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 14px;">
                     <i class="fas fa-building"></i>
                 </div>
                 <span>ديم العقارية</span>
@@ -998,7 +1009,7 @@
                             
                             <!-- زر فتح في Google Maps -->
                             <div style="position: absolute; top: 10px; left: 10px; z-index: 10;">
-                                <a href="https://www.google.com/maps/place/24%C2%B045'15.5%22N+46%C2%B040'25.9%22E/@24.7543141,46.6760588,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.7543141!4d46.6738701?entry=ttu&g_ep=EgoyMDI1MDcyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="background: rgba(255, 255, 255, 0.9); color: #1e40af; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border: 1px solid #e0e0e0;">
+                                <a href="https://www.google.com/maps/place/24%C2%B045'15.5%22N+46%C2%B040'25.9%22E/@24.7543141,46.6760588,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.7543141!4d46.6738701?entry=ttu&g_ep=EgoyMDI1MDcyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="background: rgba(0, 0, 0, 0.9); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border: 1px solid #e0e0e0;">
                                     <i class="fas fa-external-link-alt"></i>
                                     فتح في Google Maps
                                 </a>
