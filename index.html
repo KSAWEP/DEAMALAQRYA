@@ -29,7 +29,7 @@
         /* Header */
         header {
             background: white;
-            padding: 15px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #e0e0e0;
             position: fixed;
             top: 0;
@@ -1031,11 +1031,15 @@
                 padding: 0 15px;
             }
 
+            header {
+                padding: 8px 0;
+            }
+
             .header-content {
                 flex-direction: row;
-                justify-content: flex-end;
+                justify-content: space-between;
+                align-items: center;
                 gap: 15px;
-                text-align: right;
             }
 
             .logo {
@@ -1043,36 +1047,35 @@
             }
 
             .logo img {
-                height: 100px;
+                height: 55px;
             }
 
             .nav-menu {
                 order: 2;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
+                gap: 10px;
             }
 
             .nav-menu a {
-                font-size: 0.9rem;
-                padding: 8px 0;
+                font-size: 0.85rem;
+                padding: 6px 0;
             }
 
             .contact-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+                padding: 8px 16px;
+                font-size: 0.8rem;
             }
 
             .main-layout {
-                grid-template-columns: 280px 1fr;
-                gap: 15px;
+                grid-template-columns: 1fr;
+                gap: 20px;
                 padding: 80px 0 20px 0;
             }
 
             .sidebar {
+                order: 2;
                 padding: 20px;
-                top: 100px;
+                position: relative;
+                top: auto;
             }
 
             .main-content {
@@ -1084,27 +1087,27 @@
             }
 
             .gallery-nav {
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
             }
 
             .gallery-nav.prev {
-                left: 10px;
+                left: 8px;
             }
 
             .gallery-nav.next {
-                right: 10px;
+                right: 8px;
             }
 
             .image-counter {
-                bottom: 10px;
+                bottom: 8px;
                 font-size: 0.8rem;
-                padding: 6px 12px;
+                padding: 5px 10px;
             }
 
             .main-content-area {
-                padding: 20px 15px;
+                padding: 15px;
             }
 
             .project-title-main {
@@ -1114,12 +1117,16 @@
             }
 
             .project-title-main h1 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
+            }
+
+            .project-type-badge {
+                align-self: center;
             }
 
             .project-description {
-                padding: 20px;
-                font-size: 1rem;
+                padding: 15px;
+                font-size: 0.9rem;
             }
 
             .features-warranties-section h2 {
@@ -1141,7 +1148,7 @@
             }
 
             .feature-item-small, .warranty-item-small {
-                padding: 10px;
+                padding: 12px;
             }
 
             .feature-icon-small, .warranty-icon-small {
@@ -1150,31 +1157,22 @@
                 padding: 6px;
             }
 
-            .feature-icon-small img, .warranty-icon-small img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-            }
-
             .units-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .unit-card {
-                margin-bottom: 20px;
+                gap: 15px;
             }
 
             .unit-image {
-                height: 180px;
+                height: 160px;
             }
 
             .unit-info {
-                padding: 20px;
+                padding: 15px;
             }
 
             .unit-specs {
-                flex-direction: column;
-                gap: 10px;
+                flex-wrap: wrap;
+                gap: 8px;
             }
 
             .places-grid {
@@ -1183,156 +1181,225 @@
             }
 
             .place-item {
-                padding: 15px;
+                padding: 12px;
             }
 
             .place-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
             }
 
             .spec-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
 
             .spec-item {
-                padding: 20px;
+                padding: 15px 8px;
             }
 
             .spec-number {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
             }
 
-            .project-dates {
-                padding: 20px;
-            }
-
-            .price {
-                padding: 20px;
-            }
-
-            .price-value {
-                font-size: 1.5rem;
-            }
-
-            .sar-icon {
-                width: 18px;
-                height: 18px;
-            }
-
-            .sar-icon-small {
-                width: 14px;
-                height: 14px;
-            }
-
-            .interest-btn {
-                padding: 15px;
-                font-size: 0.9rem;
-            }
-
-            .whatsapp-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-                bottom: 20px;
-                right: 20px;
-            }
-
-            .toast {
-                right: 15px;
-                left: 15px;
-                transform: translateY(-400px);
-                font-size: 0.9rem;
-                padding: 12px 20px;
-            }
-
-            .toast.show {
-                transform: translateY(0);
-            }
-
-            .location-map {
-                height: 300px;
-                margin-bottom: 20px;
-                border: 2px solid #333;
-            }
-
-            .map-controls {
-                top: 12px;
-                right: 12px;
-                gap: 8px;
-            }
-
-            .map-control-btn {
-                padding: 10px 12px;
+            .spec-label {
                 font-size: 0.75rem;
             }
 
-            .developer-logo img {
-                width: 100px;
-            }
-
-            .nearby-places h3 {
-                font-size: 1.1rem;
-            }
-
-            .features-warranties-section h2 {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo img {
-                height: 80px;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .header-content {
-                justify-content: center;
-            }
-
-            .main-layout {
-                grid-template-columns: 240px 1fr;
-                gap: 10px;
-            }
-
-            .sidebar {
+            .project-dates {
                 padding: 15px;
-                top: 90px;
             }
 
-            .image-gallery {
-                height: 250px;
-            }
-
-            .gallery-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 0.9rem;
-            }
-
-            .project-title-main h1 {
-                font-size: 1.7rem;
-            }
-
-            .main-content-area {
-                padding: 15px 10px;
-            }
-
-            .spec-number {
-                font-size: 1.5rem;
+            .price {
+                padding: 15px;
             }
 
             .price-value {
                 font-size: 1.3rem;
             }
 
+            .interest-btn {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .whatsapp-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 1.4rem;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .location-map {
+                height: 250px;
+                margin-bottom: 15px;
+                border: 2px solid #333;
+            }
+
+            .map-controls {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+
+            .map-control-btn {
+                padding: 8px 10px;
+                font-size: 0.7rem;
+            }
+
             .developer-logo img {
-                width: 70px;
+                width: 60px;
+            }
+
+            .developer-name {
+                font-size: 0.8rem;
+            }
+
+            .toast {
+                right: 10px;
+                left: 10px;
+                transform: translateY(-200px);
+                font-size: 0.85rem;
+                padding: 10px 15px;
+            }
+
+            .toast.show {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            header {
+                padding: 6px 0;
+            }
+
+            .logo img {
+                height: 45px;
+            }
+
+            .nav-menu {
+                gap: 8px;
+            }
+
+            .contact-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 70px 0 20px 0;
+            }
+
+            .sidebar {
+                order: 2;
+                padding: 15px;
+                margin-top: 0;
+            }
+
+            .main-content {
+                order: 1;
+            }
+
+            .image-gallery {
+                height: 220px;
+            }
+
+            .gallery-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+
+            .gallery-nav.prev {
+                left: 5px;
+            }
+
+            .gallery-nav.next {
+                right: 5px;
+            }
+
+            .image-counter {
+                bottom: 5px;
+                font-size: 0.75rem;
+                padding: 4px 8px;
+            }
+
+            .main-content-area {
+                padding: 10px;
+            }
+
+            .project-title-main h1 {
+                font-size: 1.3rem;
+            }
+
+            .project-description {
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+
+            .spec-item {
+                padding: 12px 6px;
+            }
+
+            .spec-number {
+                font-size: 1.2rem;
+            }
+
+            .spec-label {
+                font-size: 0.7rem;
+            }
+
+            .price {
+                padding: 12px;
+            }
+
+            .price-value {
+                font-size: 1.2rem;
+            }
+
+            .interest-btn {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+
+            .developer-logo img {
+                width: 50px;
+            }
+
+            .developer-name {
+                font-size: 0.75rem;
+            }
+
+            .whatsapp-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .location-map {
+                height: 200px;
+                border: 1px solid #333;
+            }
+
+            .map-controls {
+                top: 8px;
+                right: 8px;
+                gap: 4px;
+            }
+
+            .map-control-btn {
+                padding: 6px 8px;
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -1729,7 +1796,6 @@
                                         <i class="fas fa-mosque"></i>
                                     </div>
                                     <div class="place-info">
-                                        <h4>مسجد الملك خالد</h4>
                                         <div class="place-distance">المسافة: 1 كم</div>
                                     </div>
                                 </div>
