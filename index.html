@@ -3,8 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ديارا المروج فلل - ريفا العقارية</title>
+    <title>ديارا المروج فلل - داعم خدمات التسويق العقارية</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Define ALL functions immediately in head
+        function openModal() {
+            document.getElementById('interestModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            document.getElementById('interestModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showProjectPin() {
+            const pin = document.getElementById('projectPin');
+            if (pin) pin.style.display = 'block';
+        }
+
+        function hideProjectPin() {
+            const pin = document.getElementById('projectPin');
+            if (pin) pin.style.display = 'none';
+        }
+
+        // Location function
+        function openLocation() {
+            window.open('https://www.google.com/maps/place/24%C2%B045\'15.5%22N+46%C2%B040\'25.9%22E/@24.7543141,46.6712952,17z/', '_blank');
+        }
+
+        // Gallery variables
+        var currentImageIndex = 0;
+        var images = [];
+        var totalImages = 0;
+
+        // Image Zoom functionality - GLOBAL
+        function openImageZoom(imageSrc, unitId) {
+            console.log('Opening image zoom for:', unitId, imageSrc);
+            
+            const modal = document.getElementById('imageZoomModal');
+            const image = document.getElementById('zoomImage');
+            const title = document.getElementById('zoomModalTitle');
+            const unitNumber = document.getElementById('zoomUnitNumber');
+            const unitDescription = document.getElementById('zoomUnitDescription');
+            
+            if (!modal || !image) {
+                console.error('Modal elements not found');
+                return;
+            }
+            
+            image.src = imageSrc;
+            
+            if (unitId === 'unit1') {
+                if (title) title.textContent = 'تفاصيل الوحدة - فيلا 01';
+                if (unitNumber) unitNumber.textContent = 'فيلا 01';
+                if (unitDescription) unitDescription.textContent = 'فيلا 01 على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.';
+            } else if (unitId === 'unit2') {
+                if (title) title.textContent = 'تفاصيل الوحدة - فيلا 02';
+                if (unitNumber) unitNumber.textContent = 'فيلا 02';
+                if (unitDescription) unitDescription.textContent = 'فيلا 02 على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.';
+            }
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            console.log('Image zoom modal opened successfully');
+        }
+
+        function closeImageZoom() {
+            console.log('Closing image zoom modal');
+            const modal = document.getElementById('imageZoomModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Gallery function - GLOBAL
+        function changeImage(direction) {
+            console.log('تغيير الصورة:', direction);
+            
+            // Get images if not already loaded
+            if (images.length === 0) {
+                images = document.querySelectorAll('.gallery-image');
+                totalImages = images.length;
+            }
+            
+            if (images.length === 0) {
+                console.log('لا توجد صور');
+                return;
+            }
+            
+            // Get current and next image indices
+            const currentIndex = currentImageIndex;
+            let nextIndex = currentImageIndex + direction;
+            
+            if (nextIndex >= totalImages) {
+                nextIndex = 0;
+            } else if (nextIndex < 0) {
+                nextIndex = totalImages - 1;
+            }
+            
+            // Remove all classes from all images
+            images.forEach(img => {
+                img.classList.remove('active', 'prev', 'next');
+            });
+            
+            // Different animation based on direction
+            if (direction > 0) {
+                // Going forward: new image comes from right, current goes left
+                images[currentIndex].classList.add('active');
+                images[nextIndex].classList.add('next');
+                
+                setTimeout(() => {
+                    images[currentIndex].classList.remove('active');
+                    images[currentIndex].classList.add('prev');
+                    images[nextIndex].classList.remove('next');
+                    images[nextIndex].classList.add('active');
+                }, 5);
+            } else {
+                // Going backward: new image comes from left, current goes right
+                images[currentIndex].classList.add('active');
+                images[nextIndex].classList.add('prev');
+                
+                setTimeout(() => {
+                    images[currentIndex].classList.remove('active');
+                    images[currentIndex].classList.add('next');
+                    images[nextIndex].classList.remove('prev');
+                    images[nextIndex].classList.add('active');
+                }, 5);
+            }
+            
+            // Update current index
+            currentImageIndex = nextIndex;
+            
+            // Update counter
+            const currentCounter = document.getElementById('current-image');
+            if (currentCounter) {
+                currentCounter.textContent = currentImageIndex + 1;
+            }
+            
+            console.log('الصورة الحالية:', currentImageIndex + 1);
+        }
+    </script>
     <style>
         * {
             margin: 0;
@@ -13,10 +155,10 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Readex Pro', Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
+            color: #000;
+            background: #ffffff;
             min-height: 100vh;
         }
 
@@ -29,8 +171,8 @@
         /* Header */
         header {
             background: white;
-            padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+            border-bottom: 1px solid #000;
             position: fixed;
             top: 0;
             left: 0;
@@ -63,7 +205,7 @@
         }
 
         .nav-menu a {
-            color: #666;
+            color: #000;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -71,11 +213,11 @@
         }
 
         .nav-menu a:hover {
-            color: #4a5d23;
+            color: #666;
         }
 
         .contact-btn {
-            background: #4a5d23;
+            background: #000;
             color: white;
             padding: 10px 20px;
             border-radius: 20px;
@@ -88,14 +230,14 @@
         }
 
         .contact-btn:hover {
-            background: #3a4a1c;
+            background: #333;
             transform: translateY(-1px);
         }
 
         /* Main Layout */
         .main-layout {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 1fr 280px;
             gap: 20px;
             padding: 90px 0 30px 0;
             min-height: 100vh;
@@ -105,89 +247,90 @@
         .sidebar {
             background: white;
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px;
             height: fit-content;
             position: sticky;
             top: 120px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            order: 2;
         }
 
         .developer-logo {
-            text-align: right;
-            margin-bottom: 25px;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .developer-logo img {
-            width: 80px;
+            width: 60px;
             height: auto;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .developer-name {
-            color: #4a5d23;
-            font-size: 0.9rem;
+            color: #000;
+            font-size: 0.8rem;
             font-weight: bold;
         }
 
         .project-specs {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .project-specs h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1rem;
+            color: #000;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
         }
 
         .spec-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .spec-item {
             text-align: center;
-            padding: 15px 10px;
+            padding: 12px 8px;
             background: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            border: 1px solid #000;
         }
 
         .spec-number {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+            color: #000;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .spec-icon {
-            color: #4a5d23;
-            font-size: 1rem;
+            color: #000;
+            font-size: 0.9rem;
         }
 
         .spec-label {
-            color: #666;
-            font-size: 0.8rem;
+            color: #000;
+            font-size: 0.75rem;
         }
 
         .project-dates {
-            margin-bottom: 25px;
-            padding: 15px;
+            margin-bottom: 20px;
+            padding: 12px;
             background: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            border: 1px solid #000;
         }
 
         .date-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 8px 0;
+            margin-bottom: 8px;
+            padding: 6px 0;
         }
 
         .date-row:last-child {
@@ -195,23 +338,23 @@
         }
 
         .date-label {
-            color: #666;
-            font-size: 0.85rem;
+            color: #000;
+            font-size: 0.8rem;
         }
 
         .date-value {
-            color: #333;
+            color: #000;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .price {
             text-align: center;
             margin-bottom: 20px;
             padding: 20px;
-            background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+            background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
             border-radius: 15px;
-            border: 1px solid #c8e6c9;
+            border: 1px solid #ccc;
         }
 
         .price-label {
@@ -223,12 +366,12 @@
         .price-value {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #2e7d32;
+            color: #000;
         }
 
         .interest-btn {
             width: 100%;
-            background: #2e7d32;
+            background: #000;
             color: white;
             border: none;
             padding: 15px;
@@ -243,9 +386,76 @@
             gap: 8px;
         }
 
-        .interest-btn:hover {
-            background: #1b5e20;
+        /* Price and Interest Section */
+        .price-interest-section {
+            background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 20px 20px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .price-display {
+            background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .price-label {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+        }
+
+        .price-amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .price-amount .sar-icon {
+            width: 16px;
+            height: 16px;
+            background: #000;
+            border-radius: 3px;
+        }
+
+        .interest-btn-main {
+            width: 100%;
+            background: #000;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .interest-btn-main:hover {
+            background: #333;
             transform: translateY(-1px);
+        }
+
+        .interest-btn-main i {
+            font-size: 0.8rem;
         }
 
         /* Main Content */
@@ -254,6 +464,7 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            order: 1;
         }
 
         .main-content-area {
@@ -280,12 +491,25 @@
             position: absolute;
             top: 0;
             left: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            opacity: 1;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+            z-index: 1;
         }
 
         .gallery-image.active {
-            opacity: 1;
+            transform: translateX(0);
+            z-index: 3;
+        }
+
+        .gallery-image.prev {
+            transform: translateX(-100%);
+            z-index: 2;
+        }
+
+        .gallery-image.next {
+            transform: translateX(100%);
+            z-index: 2;
         }
 
         .gallery-nav {
@@ -294,8 +518,8 @@
             transform: translateY(-50%);
             background: rgba(255,255,255,0.9);
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -303,13 +527,15 @@
             justify-content: center;
             transition: all 0.3s ease;
             color: #333;
-            font-size: 1rem;
+            font-size: 1.2rem;
             z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .gallery-nav:hover {
             background: white;
             transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
         .gallery-nav.prev {
@@ -318,6 +544,33 @@
 
         .gallery-nav.next {
             right: 15px;
+        }
+
+        /* Location Pin */
+        .location-pin {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #333;
+            font-size: 1.2rem;
+            z-index: 15;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .location-pin:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: white;
         }
 
         .image-counter {
@@ -351,7 +604,7 @@
         }
 
         .project-type-badge {
-            background: #4a5d23;
+            background: #000;
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
@@ -375,7 +628,6 @@
             padding: 20px;
             background: #f8f9fa;
             border-radius: 10px;
-            border-left: 4px solid #4a5d23;
         }
 
         /* Unit Cards */
@@ -406,12 +658,354 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .unit-image:hover {
+            transform: scale(1.02);
         }
 
         .unit-image img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            cursor: pointer;
+        }
+
+        /* Image Zoom Modal */
+        .image-zoom-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .image-zoom-content {
+            position: relative;
+            margin: 8% auto;
+            width: 95%;
+            max-width: 1200px;
+            height: 80vh;
+            background: white;
+            border-radius: 15px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .zoom-header {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .zoom-header h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .zoom-close {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .zoom-close:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .zoom-body {
+            padding: 30px;
+            min-height: calc(80vh - 120px);
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        .zoom-image-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .zoom-image-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .zoom-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border: 3px solid #000;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .zoom-sidebar {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 0;
+            height: fit-content;
+            overflow: visible;
+            min-height: 600px;
+        }
+
+        .zoom-sidebar-header {
+            background: #000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .zoom-sidebar-header .logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-sidebar-header .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        .zoom-sidebar-header h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .zoom-sidebar-header p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .zoom-specs-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .zoom-spec-item {
+            text-align: center;
+            padding: 15px 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .zoom-spec-item .spec-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .zoom-spec-item .spec-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .zoom-features-list {
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .zoom-features-list h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .zoom-features-icons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .zoom-feature-icon {
+            width: 35px;
+            height: 35px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .zoom-feature-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .zoom-description-section {
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .zoom-description-section h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .zoom-description-section p {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.85rem;
+        }
+
+        .zoom-price-section {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+        }
+
+        .zoom-price-section .price-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .zoom-price-section .price-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .zoom-price-section .price-value .sar-icon {
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 3px;
+        }
+
+        .zoom-buttons {
+            padding: 0 20px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .zoom-btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .zoom-btn-interest {
+            background: #000;
+            color: white;
+        }
+
+        .zoom-btn-interest:hover {
+            background: #333;
+            transform: translateY(-1px);
+        }
+
+        .zoom-btn-contact {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #dee2e6;
+        }
+
+        .zoom-btn-contact:hover {
+            background: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+        /* Responsive Image Zoom Modal */
+        @media (max-width: 768px) {
+            .image-zoom-content {
+                width: 98%;
+                margin: 5% auto;
+                height: 85vh;
+                overflow-y: auto;
+            }
+
+            .zoom-body {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+                min-height: calc(85vh - 120px);
+            }
+
+            .zoom-specs-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .zoom-features-icons {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+
+            .zoom-feature-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .zoom-buttons {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
         }
 
         .unit-info {
@@ -432,7 +1026,7 @@
         }
 
         .unit-action {
-            color: #4a5d23;
+            color: #000;
             font-size: 0.85rem;
             text-decoration: none;
         }
@@ -444,8 +1038,20 @@
         .unit-price {
             font-size: 1.3rem;
             font-weight: bold;
-            color: #2e7d32;
+            color: #000;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .unit-price .sar-icon {
+            width: 18px;
+            height: 18px;
+            background-image: url('https://riva.sa/frontend/img/SaudiRiyal.svg');
+            background-size: contain;
+            background-repeat: no-referrer;
+            background-position: center;
         }
 
         .unit-specs {
@@ -465,7 +1071,7 @@
         }
 
         .unit-spec i {
-            color: #4a5d23;
+            color: #000;
         }
 
         /* Content Sections */
@@ -497,6 +1103,13 @@
             min-height: 300px;
         }
 
+        .section-divider {
+            width: 1px;
+            height: 100%;
+            background: #e9ecef;
+            min-height: 300px;
+        }
+
         .features-column h3, .warranties-column h3 {
             text-align: center;
             color: #333;
@@ -507,19 +1120,21 @@
         /* Small Features Grid */
         .features-grid-small {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
         }
 
         .feature-item-small {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             padding: 12px;
             background: #f8f9fa;
             border-radius: 10px;
             border: 1px solid #e9ecef;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .feature-item-small:hover {
@@ -530,12 +1145,12 @@
         .feature-icon-small {
             width: 35px;
             height: 35px;
-            border-radius: 8px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             background: transparent;
-            padding: 8px;
+            padding: 0;
             flex-shrink: 0;
         }
 
@@ -546,27 +1161,30 @@
         }
 
         .feature-item-small .feature-text {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #333;
             font-weight: 500;
+            text-align: center;
         }
 
         /* Small Warranties Grid */
         .warranties-grid-small {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
         }
 
         .warranty-item-small {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             padding: 12px;
             background: #f8f9fa;
             border-radius: 10px;
             border: 1px solid #e9ecef;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .warranty-item-small:hover {
@@ -577,12 +1195,12 @@
         .warranty-icon-small {
             width: 35px;
             height: 35px;
-            border-radius: 8px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             background: transparent;
-            padding: 8px;
+            padding: 0;
             flex-shrink: 0;
         }
 
@@ -593,18 +1211,19 @@
         }
 
         .warranty-item-small .warranty-text {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #333;
             font-weight: 500;
             flex: 1;
+            text-align: center;
         }
 
         .warranty-duration-small {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #666;
-            padding: 3px 8px;
-            background: rgba(74,93,35,0.1);
-            border-radius: 8px;
+            padding: 2px 6px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 6px;
             white-space: nowrap;
         }
 
@@ -618,6 +1237,115 @@
             position: relative;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border: 3px solid #333;
+            background: #f0f0f0;
+        }
+
+        .location-map iframe {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Project Pin Overlay */
+        .project-pin-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            background: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 3px solid #000;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        .project-pin-overlay::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid white;
+        }
+
+        .pin-title {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .pin-location {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .close-pin {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-pin:hover {
+            color: #333;
+        }
+
+        /* Project Location Marker */
+        .project-marker {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 15;
+            width: 40px;
+            height: 40px;
+            background: #000;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0,0,0,0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0,0,0,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+        }
+
+        /* Area Circle */
+        .area-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            border: 3px solid #000;
+            border-radius: 50%;
+            z-index: 10;
+            opacity: 0.7;
         }
 
         /* Map Control Buttons */
@@ -632,7 +1360,7 @@
         }
 
         .map-control-btn {
-            background: #2d5016;
+            background: #000;
             color: white;
             border: none;
             padding: 12px 16px;
@@ -644,14 +1372,14 @@
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(45,80,22,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             white-space: nowrap;
         }
 
         .map-control-btn:hover {
-            background: #1e3009;
+            background: #333;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(45,80,22,0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
         .nearby-places h3 {
@@ -687,12 +1415,13 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            background: white;
+            border: 2px solid #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #333;
-            font-size: 1rem;
+            font-size: 1.2rem;
+            filter: grayscale(1);
         }
 
         .place-info h4 {
@@ -705,7 +1434,7 @@
         .place-distance {
             color: #666;
             font-size: 0.75rem;
-            background: rgba(74,93,35,0.1);
+            background: rgba(0,0,0,0.1);
             padding: 2px 6px;
             border-radius: 8px;
         }
@@ -717,7 +1446,7 @@
             right: 25px;
             width: 60px;
             height: 60px;
-            background: linear-gradient(45deg, #25d366, #128c7e);
+            background: #000;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -725,14 +1454,14 @@
             color: white;
             font-size: 1.6rem;
             text-decoration: none;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             z-index: 1000;
             transition: all 0.3s ease;
         }
 
         .whatsapp-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
         /* Toast Notification */
@@ -740,11 +1469,11 @@
             position: fixed;
             top: 100px;
             right: 25px;
-            background: #2e7d32;
+            background: #000;
             color: white;
             padding: 12px 20px;
             border-radius: 8px;
-            box-shadow: 0 6px 20px rgba(46,125,50,0.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             transform: translateX(400px);
             transition: transform 0.3s ease;
             z-index: 1001;
@@ -863,8 +1592,8 @@
 
         .form-control:focus {
             outline: none;
-            border-color: #4a5d23;
-            box-shadow: 0 0 0 3px rgba(74,93,35,0.1);
+            border-color: #000;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
         }
 
         .phone-input {
@@ -877,8 +1606,8 @@
         }
 
         .phone-input:focus-within {
-            border-color: #4a5d23;
-            box-shadow: 0 0 0 3px rgba(74,93,35,0.1);
+            border-color: #000;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
         }
 
         .country-code {
@@ -895,10 +1624,8 @@
         .sar-icon {
             width: 16px;
             height: 16px;
-            background-image: url('https://riva.sa/frontend/img/SaudiRiyal.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            background: #000;
+            border-radius: 2px;
         }
 
         .phone-input .form-control {
@@ -960,7 +1687,7 @@
         }
 
         .radio-option input[type="radio"]:checked + .radio-custom {
-            border-color: #4a5d23;
+            border-color: #000;
             background: white;
         }
 
@@ -972,13 +1699,13 @@
             transform: translate(-50%, -50%);
             width: 10px;
             height: 10px;
-            background: #4a5d23;
+            background: #000;
             border-radius: 50%;
         }
 
         .submit-btn {
             width: 100%;
-            background: #4a5d23;
+            background: #000;
             color: white;
             border: none;
             padding: 15px;
@@ -990,9 +1717,320 @@
             margin-top: 10px;
         }
 
-        .submit-btn:hover {
-            background: #3a4a1c;
-            transform: translateY(-1px);
+        /* Unit Details Modal */
+        .unit-modal {
+            display: none;
+            position: fixed;
+            z-index: 2001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .unit-modal-content {
+            background-color: white;
+            margin: 2% auto;
+            border-radius: 15px;
+            width: 95%;
+            max-width: 1300px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .unit-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e9ecef;
+            background: #f8f9fa;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .unit-modal-header h2 {
+            color: #333;
+            font-size: 1.3rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .unit-modal-body {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        .floor-plans-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .floor-plans-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .floor-plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .floor-plan-item {
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .floor-plan-item:hover {
+            border-color: #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .floor-plan-item.active {
+            border-color: #000;
+            background: #f8fdf8;
+        }
+
+        .floor-plan-small {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .floor-plan-label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .main-floor-plan {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .main-floor-plan-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border: 3px solid #000;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .unit-info-sidebar {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 0;
+            height: fit-content;
+            overflow: hidden;
+        }
+
+        .unit-info-header {
+            background: #000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .unit-info-header .logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unit-info-header .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        .unit-info-header h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .unit-info-header p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .unit-specs-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .unit-spec-item {
+            text-align: center;
+            padding: 15px 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .unit-spec-item .spec-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .unit-spec-item .spec-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .unit-features-list {
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .unit-features-list h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .features-icons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .feature-icon {
+            width: 35px;
+            height: 35px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .feature-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .unit-description-section {
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .unit-description-section h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .unit-description-section p {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.85rem;
+        }
+
+        .unit-price-section {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+        }
+
+        .unit-price-section .price-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .unit-price-section .price-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .unit-price-section .price-value .sar-icon {
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 3px;
+        }
+
+        /* Responsive Unit Modal */
+        @media (max-width: 768px) {
+            .unit-modal-content {
+                width: 98%;
+                margin: 1% auto;
+            }
+
+            .unit-modal-body {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .floor-plans-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .floor-plan-small {
+                height: 80px;
+            }
+
+            .unit-specs-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .features-icons {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+
+            .feature-icon {
+                width: 30px;
+                height: 30px;
+            }
         }
 
         /* Responsive Modal */
@@ -1031,49 +2069,42 @@
                 padding: 0 15px;
             }
 
-            header {
-                padding: 8px 0;
-            }
-
             .header-content {
                 flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+                justify-content: flex-end;
                 gap: 15px;
-            }
-
-            .logo {
-                order: 1;
+                text-align: right;
             }
 
             .logo img {
-                height: 55px;
+                height: 60px;
             }
 
             .nav-menu {
-                order: 2;
-                gap: 10px;
+                width: 100%;
+                justify-content: center;
+                gap: 15px;
             }
 
             .nav-menu a {
-                font-size: 0.85rem;
-                padding: 6px 0;
+                font-size: 0.9rem;
+                padding: 8px 0;
             }
 
             .contact-btn {
-                padding: 8px 16px;
-                font-size: 0.8rem;
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
 
             .main-layout {
                 grid-template-columns: 1fr;
                 gap: 20px;
-                padding: 80px 0 20px 0;
+                padding: 120px 0 20px 0;
             }
 
             .sidebar {
                 order: 2;
-                padding: 20px;
+                padding: 15px;
                 position: relative;
                 top: auto;
             }
@@ -1090,6 +2121,14 @@
                 width: 40px;
                 height: 40px;
                 font-size: 0.9rem;
+            }
+
+            .location-pin {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+                top: 8px;
+                right: 8px;
             }
 
             .gallery-nav.prev {
@@ -1134,8 +2173,13 @@
             }
 
             .features-warranties-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .features-column h3, .warranties-column h3 {
+                font-size: 1rem;
+                margin-bottom: 10px;
             }
 
             .section-divider {
@@ -1143,18 +2187,39 @@
             }
 
             .features-grid-small, .warranties-grid-small {
-                grid-template-columns: 1fr;
-                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
             }
 
             .feature-item-small, .warranty-item-small {
-                padding: 12px;
+                padding: 0;
+                flex-direction: column;
+                text-align: center;
+                gap: 6px;
+            }
+
+            .warranty-item-small {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
 
             .feature-icon-small, .warranty-icon-small {
                 width: 30px;
                 height: 30px;
-                padding: 6px;
+                padding: 0;
+                margin: 0 auto;
+            }
+
+            .feature-item-small .feature-text,
+            .warranty-item-small .warranty-text {
+                font-size: 0.7rem;
+                text-align: center;
+            }
+
+            .warranty-duration-small {
+                font-size: 0.65rem;
+                margin-top: 0;
             }
 
             .units-grid {
@@ -1176,7 +2241,7 @@
             }
 
             .places-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
             }
 
@@ -1187,7 +2252,7 @@
             .place-icon {
                 width: 35px;
                 height: 35px;
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
 
             .spec-grid {
@@ -1219,9 +2284,28 @@
                 font-size: 1.3rem;
             }
 
-            .interest-btn {
+            .price-interest-section {
+                margin: 0 15px 15px 15px;
                 padding: 12px;
-                font-size: 0.9rem;
+                gap: 8px;
+            }
+
+            .price-display {
+                padding: 10px;
+            }
+
+            .price-amount {
+                font-size: 1.1rem;
+            }
+
+            .price-label {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .interest-btn-main {
+                padding: 8px 12px;
+                font-size: 0.8rem;
             }
 
             .whatsapp-btn {
@@ -1275,27 +2359,28 @@
                 padding: 0 10px;
             }
 
-            header {
-                padding: 6px 0;
+            .header-content {
+                justify-content: flex-end;
+                text-align: right;
             }
 
             .logo img {
-                height: 45px;
+                height: 50px;
             }
 
             .nav-menu {
-                gap: 8px;
+                gap: 10px;
             }
 
             .contact-btn {
-                padding: 6px 12px;
-                font-size: 0.75rem;
+                padding: 8px 16px;
+                font-size: 0.8rem;
             }
 
             .main-layout {
                 grid-template-columns: 1fr;
                 gap: 15px;
-                padding: 70px 0 20px 0;
+                padding: 100px 0 20px 0;
             }
 
             .sidebar {
@@ -1401,6 +2486,72 @@
                 padding: 6px 8px;
                 font-size: 0.65rem;
             }
+
+            .places-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .place-item {
+                padding: 10px 8px;
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+
+            .place-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+                margin: 0 auto;
+            }
+
+            .place-info h4 {
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+            }
+
+            .place-distance {
+                font-size: 0.7rem;
+            }
+
+            .features-grid-small, .warranties-grid-small {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .feature-item-small, .warranty-item-small {
+                padding: 0;
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
+            }
+
+            .warranty-item-small {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .feature-icon-small, .warranty-icon-small {
+                width: 28px;
+                height: 28px;
+                padding: 0;
+                margin: 0 auto;
+            }
+
+            .feature-item-small .feature-text,
+            .warranty-item-small .warranty-text {
+                font-size: 0.65rem;
+                text-align: center;
+                line-height: 1.2;
+            }
+
+            .warranty-duration-small {
+                font-size: 0.6rem;
+                margin-top: 0;
+                padding: 1px 4px;
+            }
         }
     </style>
 </head>
@@ -1410,13 +2561,10 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="https://i.top4top.io/p_3493n7cla1.png" alt="ريفا العقارية">
+                    <img src="https://f.top4top.io/p_3497k6uf51.png" alt="داعم خدمات التسويق العقارية">
                 </div>
                 <nav class="nav-menu">
-                    <a href="https://wa.me/966537368030" class="contact-btn" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        تواصل معنا
-                    </a>
+                    <!-- تم حذف زر تواصل معنا -->
                 </nav>
             </div>
         </div>
@@ -1429,8 +2577,8 @@
             <!-- Sidebar -->
             <aside class="sidebar">
                 <div class="developer-logo">
-                    <img src="https://i.top4top.io/p_3493n7cla1.png" alt="ريفا العقارية">
-                    <div class="developer-name">ريفا العقارية</div>
+                    <img src="https://f.top4top.io/p_3497k6uf51.png" alt="داعم خدمات التسويق العقارية">
+                    <div class="developer-name">داعم خدمات التسويق العقارية</div>
                 </div>
 
                 <div class="project-specs">
@@ -1464,19 +2612,6 @@
                         <span class="date-value">25-06-11</span>
                     </div>
                 </div>
-
-                <div class="price">
-                    <div class="price-label">السعر</div>
-                    <div class="price-value">
-                        <div class="sar-icon"></div>
-                        3,700,000
-                    </div>
-                </div>
-
-                <button class="interest-btn">
-                    <i class="fas fa-heart"></i>
-                    تسجيل اهتمام
-                </button>
             </aside>
 
             <!-- Main Content -->
@@ -1493,17 +2628,35 @@
                         <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0XZ50EQGCAKS1ZV5WRW76.JPG" alt="فيلا ديارا المروج - غرفة النوم الرئيسية" class="gallery-image">
                         <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/project-media/01JXG0WWGYWFC81YZ6JM0PYD45.JPG" alt="فيلا ديارا المروج - الحديقة الخلفية" class="gallery-image">
                         
-                        <button class="gallery-nav prev" id="prevBtn">
+                        <button class="gallery-nav prev" onclick="changeImage(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="gallery-nav next" onclick="changeImage(1)">
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                        <button class="gallery-nav next" id="nextBtn">
-                            <i class="fas fa-chevron-left"></i>
+                        
+                        <!-- Location Pin -->
+                        <button class="location-pin" onclick="openLocation()">
+                            <i class="fas fa-map-marker-alt"></i>
                         </button>
                         
                         <div class="image-counter">
                             <span id="current-image">1</span> / <span id="total-images">7</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Price and Interest Section -->
+                <div class="price-interest-section">
+                    <div class="price-label">السعر</div>
+                    <div class="price-amount" style="color: #000 !important;">
+                        <span style="color: #000 !important;">3,700,000</span>
+                        <div class="sar-icon" style="background: #000 !important;"></div>
+                    </div>
+                    <button class="interest-btn-main" onclick="openModal()" style="background: #000 !important;">
+                        <i class="fas fa-fire"></i>
+                        تسجيل اهتمام
+                    </button>
                 </div>
 
                 <!-- Main Content Area -->
@@ -1529,17 +2682,17 @@
                     <!-- Units Section -->
                     <div class="units-grid">
                         <div class="unit-card">
-                            <div class="unit-image">
+                            <div class="unit-image" onclick="openImageZoom('https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDZFFE4D2S557DS41NM9TR.png', 'unit1')">
                                 <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDZFFE4D2S557DS41NM9TR.png" alt="مخطط الفيلا 01">
                             </div>
                             <div class="unit-info">
                                 <div class="unit-header">
                                     <span class="unit-name">فيلا 01</span>
-                                    <a href="#" class="unit-action">عرض بيانات الوحدة</a>
+                                    <a href="#" class="unit-action" onclick="openUnitModal('unit1')">عرض بيانات الوحدة</a>
                                 </div>
                                 <div class="unit-price">
-                                    <div class="sar-icon-small"></div>
                                     3,700,000
+                                    <div class="sar-icon"></div>
                                 </div>
                                 <div class="unit-specs">
                                     <div class="unit-spec">
@@ -1559,17 +2712,17 @@
                         </div>
 
                         <div class="unit-card">
-                            <div class="unit-image">
+                            <div class="unit-image" onclick="openImageZoom('https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDYFCQVPVW7XMTJZTGCD08.png', 'unit2')">
                                 <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDYFCQVPVW7XMTJZTGCD08.png" alt="مخطط الفيلا 02">
                             </div>
                             <div class="unit-info">
                                 <div class="unit-header">
                                     <span class="unit-name">فيلا 02</span>
-                                    <a href="#" class="unit-action">عرض بيانات الوحدة</a>
+                                    <a href="#" class="unit-action" onclick="openUnitModal('unit2')">عرض بيانات الوحدة</a>
                                 </div>
                                 <div class="unit-price">
-                                    <div class="sar-icon-small"></div>
                                     3,700,000
+                                    <div class="sar-icon"></div>
                                 </div>
                                 <div class="unit-specs">
                                     <div class="unit-spec">
@@ -1599,28 +2752,40 @@
                                 <h3>المميزات</h3>
                                 <div class="features-grid-small">
                                     <div class="feature-item-small">
-                                        <div class="feature-text">بدون سقي</div>
                                         <div class="feature-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCDV6DKW0SVP8Z2E908XZH.svg" alt="بدون سقي">
                                         </div>
+                                        <div class="feature-text">بدون سقي</div>
                                     </div>
                                     <div class="feature-item-small">
-                                        <div class="feature-text">غرفة خادمة</div>
                                         <div class="feature-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCCRGBA66XDJAHPVQ856GP.svg" alt="غرفة خادمة">
                                         </div>
+                                        <div class="feature-text">غرفة خادمة</div>
                                     </div>
                                     <div class="feature-item-small">
-                                        <div class="feature-text">تكييف مخفي</div>
                                         <div class="feature-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JVMEVZREQBD2XJA2QEHVF3Q8.svg" alt="تكييف مخفي">
                                         </div>
+                                        <div class="feature-text">تكييف مخفي</div>
                                     </div>
                                     <div class="feature-item-small">
-                                        <div class="feature-text">واجهات حديثة</div>
                                         <div class="feature-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JVMDP5PDNWA67THHFA47SCYX.svg" alt="واجهات حديثة">
                                         </div>
+                                        <div class="feature-text">واجهات حديثة</div>
+                                    </div>
+                                    <div class="feature-item-small">
+                                        <div class="feature-icon-small">
+                                            <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCDV6DKW0SVP8Z2E908XZH.svg" alt="تشطيبات فاخرة">
+                                        </div>
+                                        <div class="feature-text">تشطيبات فاخرة</div>
+                                    </div>
+                                    <div class="feature-item-small">
+                                        <div class="feature-icon-small">
+                                            <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCCRGBA66XDJAHPVQ856GP.svg" alt="موقع مميز">
+                                        </div>
+                                        <div class="feature-text">موقع مميز</div>
                                     </div>
                                 </div>
                             </div>
@@ -1633,53 +2798,53 @@
                                 <h3>الضمانات</h3>
                                 <div class="warranties-grid-small">
                                     <div class="warranty-item-small">
-                                        <div class="warranty-text">الكهرباء</div>
-                                        <div class="warranty-duration-small">سنتان</div>
                                         <div class="warranty-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/garantee/images/01JSHBPBRBXCV87NHKBP6QK2QG.svg" alt="الكهرباء">
                                         </div>
+                                        <div class="warranty-text">الكهرباء</div>
+                                        <div class="warranty-duration-small">سنتان</div>
                                     </div>
                                     <div class="warranty-item-small">
-                                        <div class="warranty-text">السباكة و الادوات الصحية</div>
-                                        <div class="warranty-duration-small">سنتان</div>
                                         <div class="warranty-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/garantee/images/01JSHBVA2KTFJ7V4W0EQAY0HYY.svg" alt="السباكة">
                                         </div>
+                                        <div class="warranty-text">السباكة و الادوات الصحية</div>
+                                        <div class="warranty-duration-small">سنتان</div>
                                     </div>
                                     <div class="warranty-item-small">
-                                        <div class="warranty-text">الاثارة</div>
-                                        <div class="warranty-duration-small">3 سنوات</div>
                                         <div class="warranty-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/garantee/images/01JSHBWSTC52Y1E30J7FJT7QB0.svg" alt="الاثارة">
                                         </div>
+                                        <div class="warranty-text">الاثارة</div>
+                                        <div class="warranty-duration-small">3 سنوات</div>
                                     </div>
                                     <div class="warranty-item-small">
-                                        <div class="warranty-text">تأمين</div>
-                                        <div class="warranty-duration-small">10 سنوات</div>
                                         <div class="warranty-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/garantee/images/01JSHBPY1YR0NQBPAT0R1HPNQP.svg" alt="تأمين">
                                         </div>
+                                        <div class="warranty-text">تأمين</div>
+                                        <div class="warranty-duration-small">10 سنوات</div>
                                     </div>
                                     <div class="warranty-item-small">
-                                        <div class="warranty-text">الهيكل الانشائي</div>
-                                        <div class="warranty-duration-small">10 سنوات</div>
                                         <div class="warranty-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/garantee/images/01JVMF135A5JNJVZ661DJ9W99X.svg" alt="الهيكل الانشائي">
                                         </div>
+                                        <div class="warranty-text">الهيكل الانشائي</div>
+                                        <div class="warranty-duration-small">10 سنوات</div>
                                     </div>
                                     <div class="warranty-item-small">
-                                        <div class="warranty-text">المواصير الحرارية</div>
-                                        <div class="warranty-duration-small">15 سنة</div>
                                         <div class="warranty-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/garantee/images/01JSHBR9833CP09CYSWE795TZ0.svg" alt="المواصير الحرارية">
                                         </div>
+                                        <div class="warranty-text">المواصير الحرارية</div>
+                                        <div class="warranty-duration-small">15 سنة</div>
                                     </div>
                                     <div class="warranty-item-small">
-                                        <div class="warranty-text">طبقون الكهرباء</div>
-                                        <div class="warranty-duration-small">25 سنة</div>
                                         <div class="warranty-icon-small">
                                             <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/garantee/images/01JSHBW1TWA9ZDYC7JY1QWHYKE.svg" alt="طبقون الكهرباء">
                                         </div>
+                                        <div class="warranty-text">طبقون الكهرباء</div>
+                                        <div class="warranty-duration-small">25 سنة</div>
                                     </div>
                                 </div>
                             </div>
@@ -1701,9 +2866,25 @@
                                 height="300" 
                                 style="border:0; border-radius: 10px;" 
                                 allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
+                                loading="eager" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                preload="auto">
                             </iframe>
+                            
+                            <!-- Area Circle -->
+                            <div class="area-circle"></div>
+                            
+                            <!-- Project Location Marker -->
+                            <div class="project-marker" onclick="showProjectPin()">
+                                🏠
+                            </div>
+                            
+                            <!-- Project Pin Overlay -->
+                            <div class="project-pin-overlay" id="projectPin" style="display: none;">
+                                <button class="close-pin" onclick="hideProjectPin()">×</button>
+                                <div class="pin-title">ديارا المروج</div>
+                                <div class="pin-location">الرياض - المروج</div>
+                            </div>
                             
                             <!-- Map Control Buttons -->
                             <div class="map-controls">
@@ -1713,7 +2894,7 @@
                                 </button>
                                 <button class="map-control-btn google-maps-btn" onclick="window.open('https://www.google.com/maps/place/24%C2%B045\'15.5%22N+46%C2%B040\'25.9%22E/@24.7543141,46.6712952,17z/data=!3m1!4b1!4m4!3m3!8m2!3d24.7543141!4d46.6738701?entry=ttu&g_ep=EgoyMDI1MDcyMy4wIKXMDSoASAFQAw%3D%3D', '_blank')">
                                     <i class="fas fa-external-link-alt"></i>
-                                    فتح في خرائط google
+                                    فتح في خرائط Google
                                 </button>
                             </div>
                         </div>
@@ -1723,7 +2904,7 @@
                             <div class="places-grid">
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-road"></i>
+                                        🛣️
                                     </div>
                                     <div class="place-info">
                                         <h4>طريق الملك فهد</h4>
@@ -1733,7 +2914,7 @@
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-shopping-cart"></i>
+                                        🏬
                                     </div>
                                     <div class="place-info">
                                         <h4>مول الرياض جاليري</h4>
@@ -1743,7 +2924,7 @@
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-building"></i>
+                                        🏢
                                     </div>
                                     <div class="place-info">
                                         <h4>برج مصرف الراجحي</h4>
@@ -1753,7 +2934,7 @@
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-road"></i>
+                                        🛣️
                                     </div>
                                     <div class="place-info">
                                         <h4>طريق الإمام سعود بن عبدالعزيز</h4>
@@ -1763,7 +2944,7 @@
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-plane"></i>
+                                        🏙️
                                     </div>
                                     <div class="place-info">
                                         <h4>KAFD</h4>
@@ -1773,7 +2954,7 @@
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-graduation-cap"></i>
+                                        🎓
                                     </div>
                                     <div class="place-info">
                                         <h4>جامعة الأمير سلطان</h4>
@@ -1783,7 +2964,7 @@
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-hospital"></i>
+                                        🏥
                                     </div>
                                     <div class="place-info">
                                         <h4>مستشفى الملك فهد</h4>
@@ -1793,111 +2974,240 @@
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-mosque"></i>
+                                        🕌
                                     </div>
                                     <div class="place-info">
-                                        <div class="place-distance">المسافة: 1 كم</div>
+                                        <h4>مسجد الملك خالد</h4>
+                                        <div class="place-distance">المسافة: 500 م</div>
                                     </div>
                                 </div>
 
                                 <div class="place-item">
                                     <div class="place-icon">
-                                        <i class="fas fa-tree"></i>
+                                        🍽️
                                     </div>
                                     <div class="place-info">
-                                        <h4>حديقة الملك عبدالله</h4>
-                                        <div class="place-distance">المسافة: 2 كم</div>
+                                        <h4>مطاعم ومقاهي</h4>
+                                        <div class="place-distance">المسافة: 1 كم</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </main>
         </div>
     </div>
 
-    <!-- Interest Form Modal -->
-    <div id="interestModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>تقديم اهتمام لشراء الوحدة</h2>
-                <span class="close-btn">&times;</span>
+    <!-- Image Zoom Modal -->
+    <div class="image-zoom-modal" id="imageZoomModal">
+        <div class="image-zoom-content">
+            <div class="zoom-header">
+                <h3 id="zoomModalTitle">تفاصيل الوحدة</h3>
+                <span class="zoom-close" onclick="closeImageZoom()">&times;</span>
             </div>
-            <div class="modal-body">
-                <form id="interestForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>اختر الوحدة</label>
-                            <select class="form-control">
-                                <option value="">اختر الوحدة</option>
-                                <option value="villa1">فيلا 01</option>
-                                <option value="villa2">فيلا 02</option>
-                            </select>
+            <div class="zoom-body">
+                <div class="zoom-image-section">
+                    <div class="zoom-image-title">مخطط الفيلا</div>
+                    <img id="zoomImage" class="zoom-image" src="" alt="مخطط الوحدة">
+                </div>
+                
+                <div class="zoom-sidebar">
+                    <div class="zoom-sidebar-header">
+                        <div class="logo">
+                            <img src="https://f.top4top.io/p_3497k6uf51.png" alt="ديارا العقارية">
+                        </div>
+                        <h3>ديارا العقارية</h3>
+                        <p id="zoomUnitNumber">فيلا 01</p>
+                    </div>
+                    
+                    <div class="zoom-specs-grid">
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">361 <i class="fas fa-expand-arrows-alt"></i></div>
+                            <div class="spec-label">مسطح البناء</div>
+                        </div>
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">200 <i class="fas fa-expand-arrows-alt"></i></div>
+                            <div class="spec-label">مساحة الأرض</div>
+                        </div>
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">7 <i class="fas fa-bath"></i></div>
+                            <div class="spec-label">دورات مياه</div>
+                        </div>
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">4 <i class="fas fa-bed"></i></div>
+                            <div class="spec-label">غرف نوم</div>
+                        </div>
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">1 <i class="fas fa-utensils"></i></div>
+                            <div class="spec-label">مطبخ</div>
+                        </div>
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">2 <i class="fas fa-couch"></i></div>
+                            <div class="spec-label">صالة</div>
+                        </div>
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">1 <i class="fas fa-door-open"></i></div>
+                            <div class="spec-label">مجلس</div>
+                        </div>
+                        <div class="zoom-spec-item">
+                            <div class="spec-number">3 <i class="fas fa-building"></i></div>
+                            <div class="spec-label">الدور</div>
                         </div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>اسمك الأول</label>
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label>الاسم الأخير</label>
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>رقم الهاتف</label>
-                            <div class="phone-input">
-                                <span class="country-code">966+</span>
-                                <input type="tel" class="form-control" placeholder="5xxxxxxxx">
+                    <div class="zoom-features-list">
+                        <h4>المميزات</h4>
+                        <div class="zoom-features-icons">
+                            <div class="zoom-feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCDV6DKW0SVP8Z2E908XZH.svg" alt="بدون سقي">
                             </div>
-                            <small class="form-text">أدخل رقم الجوال بدون رمز الدولة (بداية 5)</small>
-                        </div>
-                        <div class="form-group">
-                            <label>بريد الكتروني</label>
-                            <input type="email" class="form-control" placeholder="">
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <label class="section-title">طريقة الشراء</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="payment_method" value="cash" checked>
-                                <span class="radio-custom"></span>
-                                كاش
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="payment_method" value="bank">
-                                <span class="radio-custom"></span>
-                                تمويل بنكي
-                            </label>
+                            <div class="zoom-feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCCRGBA66XDJAHPVQ856GP.svg" alt="غرفة خادمة">
+                            </div>
+                            <div class="zoom-feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JVMEVZREQBD2XJA2QEHVF3Q8.svg" alt="تكييف مخفي">
+                            </div>
+                            <div class="zoom-feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JVMDP5PDNWA67THHFA47SCYX.svg" alt="واجهات حديثة">
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="form-section">
-                        <label class="section-title">الغرض من الشراء</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="purpose" value="residence" checked>
-                                <span class="radio-custom"></span>
-                                سكن
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="purpose" value="investment">
-                                <span class="radio-custom"></span>
-                                استثمار
-                            </label>
+                    <div class="zoom-description-section">
+                        <h4>الوصف</h4>
+                        <p id="zoomUnitDescription">فيلا على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.</p>
+                    </div>
+                    
+                    <div class="zoom-price-section">
+                        <div class="price-label">السعر</div>
+                        <div class="price-value">
+                            3,700,000
+                            <div class="sar-icon"></div>
                         </div>
                     </div>
                     
-                    <button type="submit" class="submit-btn">إرسال</button>
-                </form>
+                    <div class="zoom-buttons">
+                        <button class="zoom-btn zoom-btn-interest" onclick="closeImageZoom(); openModal();">
+                            <i class="fas fa-fire"></i>
+                            تسجيل اهتمام بالوحدة
+                        </button>
+                        <button class="zoom-btn zoom-btn-contact" onclick="window.open('https://wa.me/966537368030', '_blank')">
+                            <i class="fab fa-whatsapp"></i>
+                            اتصال
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unit Details Modal -->
+    <div class="unit-modal" id="unitModal">
+        <div class="unit-modal-content">
+            <div class="unit-modal-header">
+                <h2 id="unitModalTitle">تفاصيل الوحدة</h2>
+                <span class="close-btn" onclick="closeUnitModal()">&times;</span>
+            </div>
+            <div class="unit-modal-body">
+                <div class="floor-plans-section">
+                    <div class="floor-plans-title">مخطط الفيلا</div>
+                    
+                    <div class="floor-plans-grid">
+                        <div class="floor-plan-item active" onclick="selectFloorPlan(0)">
+                            <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDZFFE4D2S557DS41NM9TR.png" alt="الطابق الأرضي" class="floor-plan-small">
+                            <div class="floor-plan-label">الطابق الأرضي</div>
+                        </div>
+                        <div class="floor-plan-item" onclick="selectFloorPlan(1)">
+                            <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDYFCQVPVW7XMTJZTGCD08.png" alt="الطابق الأول" class="floor-plan-small">
+                            <div class="floor-plan-label">الطابق الأول</div>
+                        </div>
+                        <div class="floor-plan-item" onclick="selectFloorPlan(2)">
+                            <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDZFFE4D2S557DS41NM9TR.png" alt="الطابق العلوي" class="floor-plan-small">
+                            <div class="floor-plan-label">الطابق العلوي</div>
+                        </div>
+                    </div>
+                    
+                    <div class="main-floor-plan">
+                        <img id="mainFloorPlanImage" src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDZFFE4D2S557DS41NM9TR.png" alt="مخطط الطوابق" class="main-floor-plan-image">
+                    </div>
+                </div>
+                
+                <div class="unit-info-sidebar">
+                    <div class="unit-info-header">
+                        <div class="logo">
+                            <img src="https://f.top4top.io/p_3497k6uf51.png" alt="ديارا العقارية">
+                        </div>
+                        <h3>ديارا العقارية</h3>
+                        <p id="unitNumberText">فيلا 02</p>
+                    </div>
+                    
+                    <div class="unit-specs-grid">
+                        <div class="unit-spec-item">
+                            <div class="spec-number">361 <i class="fas fa-expand-arrows-alt"></i></div>
+                            <div class="spec-label">مسطح البناء</div>
+                        </div>
+                        <div class="unit-spec-item">
+                            <div class="spec-number">200 <i class="fas fa-expand-arrows-alt"></i></div>
+                            <div class="spec-label">مساحة الأرض</div>
+                        </div>
+                        <div class="unit-spec-item">
+                            <div class="spec-number">7 <i class="fas fa-bath"></i></div>
+                            <div class="spec-label">دورات مياه</div>
+                        </div>
+                        <div class="unit-spec-item">
+                            <div class="spec-number">4 <i class="fas fa-bed"></i></div>
+                            <div class="spec-label">غرف نوم</div>
+                        </div>
+                        <div class="unit-spec-item">
+                            <div class="spec-number">1 <i class="fas fa-utensils"></i></div>
+                            <div class="spec-label">مطبخ</div>
+                        </div>
+                        <div class="unit-spec-item">
+                            <div class="spec-number">2 <i class="fas fa-couch"></i></div>
+                            <div class="spec-label">صالة</div>
+                        </div>
+                        <div class="unit-spec-item">
+                            <div class="spec-number">1 <i class="fas fa-door-open"></i></div>
+                            <div class="spec-label">مجلس</div>
+                        </div>
+                        <div class="unit-spec-item">
+                            <div class="spec-number">3 <i class="fas fa-building"></i></div>
+                            <div class="spec-label">الدور</div>
+                        </div>
+                    </div>
+                    
+                    <div class="unit-features-list">
+                        <h4>المميزات</h4>
+                        <div class="features-icons">
+                            <div class="feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCDV6DKW0SVP8Z2E908XZH.svg" alt="بدون سقي">
+                            </div>
+                            <div class="feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JSHCCRGBA66XDJAHPVQ856GP.svg" alt="غرفة خادمة">
+                            </div>
+                            <div class="feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JVMEVZREQBD2XJA2QEHVF3Q8.svg" alt="تكييف مخفي">
+                            </div>
+                            <div class="feature-icon">
+                                <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/feature/images/01JVMDP5PDNWA67THHFA47SCYX.svg" alt="واجهات حديثة">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="unit-description-section">
+                        <h4>الوصف</h4>
+                        <p id="unitDescriptionModal">فيلا على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.</p>
+                    </div>
+                    
+                    <div class="unit-price-section">
+                        <div class="price-label">السعر</div>
+                        <div class="price-value">
+                            3,700,000
+                            <div class="sar-icon"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1908,149 +3218,563 @@
     </a>
 
     <!-- Toast Notification -->
-    <div id="toast" class="toast">
-        <span id="toast-message"></span>
+    <div class="toast" id="toast">
+        تم تسجيل اهتمامك بنجاح!
         <i class="fas fa-check"></i>
     </div>
 
+    <!-- Interest Modal -->
+    <div class="modal" id="interestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تقديم اهتمام بشراء الوحدة</h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="interestForm" onsubmit="submitForm(event)">
+                    <div class="form-section">
+                        <label class="section-title">اختر الوحدة</label>
+                        <div class="unit-selector">
+                            <label class="unit-option">
+                                <input type="radio" name="selectedUnit" value="unit1" required>
+                                <span class="unit-radio"></span>
+                                <span class="unit-info-text">فيلا 01</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="lastName">الاسم الأخير</label>
+                            <input type="text" id="lastName" name="lastName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">الاسم الأول</label>
+                            <input type="text" id="firstName" name="firstName" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف</label>
+                            <div class="phone-input">
+                                <div class="country-code">
+                                    <div class="sar-icon"></div>
+                                    966+
+                                </div>
+                                <input type="tel" id="phone" name="phone" class="form-control" placeholder="5xxxxxxxx" required>
+                            </div>
+                            <div class="form-text">ادخل رقم الجوال يبدأ برقم الجوال (5 أرقام) (مثال: 501234567)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">البريد الالكتروني</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="section-title">طريقة الشراء</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="purchaseMethod" value="cash" required>
+                                <span class="radio-custom"></span>
+                                كاش
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="purchaseMethod" value="financing" required>
+                                <span class="radio-custom"></span>
+                                تمويل بنكي
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="section-title">الغرض من الشراء</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="purpose" value="investment" required>
+                                <span class="radio-custom"></span>
+                                استثمار
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="purpose" value="residence" required>
+                                <span class="radio-custom"></span>
+                                سكن
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        إرسال
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Global variables
-        let currentImageIndex = 0;
-        const images = document.querySelectorAll('.gallery-image');
-        const totalImages = images.length;
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('الصفحة تحملت! 🎉');
-            console.log('عدد الصور:', totalImages);
+        // Gallery functionality
+        function initializeGallery() {
+            images = document.querySelectorAll('.gallery-image');
+            totalImages = images.length;
             
-            // Set up image gallery
-            setupImageGallery();
-            
-            // Set up buttons
-            setupButtons();
-        });
-
-        function setupImageGallery() {
-            // Make sure first image is active
-            if (images.length > 0) {
+            if (totalImages > 0) {
+                // Set initial state
                 images[0].classList.add('active');
-                document.getElementById('current-image').textContent = '1';
-                document.getElementById('total-images').textContent = totalImages.toString();
-            }
-            
-            // Navigation buttons
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            
-            if (prevBtn) {
-                prevBtn.addEventListener('click', function() {
-                    console.log('السابق clicked!');
-                    changeImage(-1);
-                });
-            }
-            
-            if (nextBtn) {
-                nextBtn.addEventListener('click', function() {
-                    console.log('التالي clicked!');
-                    changeImage(1);
-                });
+                
+                // Update counter
+                const currentCounter = document.getElementById('current-image');
+                const totalCounter = document.getElementById('total-images');
+                
+                if (currentCounter) currentCounter.textContent = '1';
+                if (totalCounter) totalCounter.textContent = totalImages;
             }
         }
 
         function changeImage(direction) {
             console.log('تغيير الصورة:', direction);
             
-            if (images.length <= 1) return;
-            
-            // Remove active from current
-            images[currentImageIndex].classList.remove('active');
-            
-            // Calculate new index
-            currentImageIndex += direction;
-            if (currentImageIndex >= images.length) {
-                currentImageIndex = 0;
-            } else if (currentImageIndex < 0) {
-                currentImageIndex = images.length - 1;
+            if (!images || images.length === 0) {
+                console.log('لا توجد صور');
+                return;
             }
             
-            // Add active to new image
-            images[currentImageIndex].classList.add('active');
+            // Get current and next image indices
+            const currentIndex = currentImageIndex;
+            let nextIndex = currentImageIndex + direction;
+            
+            if (nextIndex >= totalImages) {
+                nextIndex = 0;
+            } else if (nextIndex < 0) {
+                nextIndex = totalImages - 1;
+            }
+            
+            // Remove all classes from all images
+            images.forEach(img => {
+                img.classList.remove('active', 'prev', 'next');
+            });
+            
+            // Different animation based on direction
+            if (direction > 0) {
+                // Going forward: new image comes from right, current goes left
+                images[currentIndex].classList.add('active');
+                images[nextIndex].classList.add('next');
+                
+                setTimeout(() => {
+                    images[currentIndex].classList.remove('active');
+                    images[currentIndex].classList.add('prev');
+                    images[nextIndex].classList.remove('next');
+                    images[nextIndex].classList.add('active');
+                }, 10);
+            } else {
+                // Going backward: new image comes from left, current goes right
+                images[currentIndex].classList.add('active');
+                images[nextIndex].classList.add('prev');
+                
+                setTimeout(() => {
+                    images[currentIndex].classList.remove('active');
+                    images[currentIndex].classList.add('next');
+                    images[nextIndex].classList.remove('prev');
+                    images[nextIndex].classList.add('active');
+                }, 10);
+            }
+            
+            // Update current index
+            currentImageIndex = nextIndex;
             
             // Update counter
-            document.getElementById('current-image').textContent = (currentImageIndex + 1).toString();
+            const currentCounter = document.getElementById('current-image');
+            if (currentCounter) {
+                currentCounter.textContent = currentImageIndex + 1;
+            }
             
             console.log('الصورة الحالية:', currentImageIndex + 1);
         }
 
-        function setupButtons() {
-            const interestBtn = document.querySelector('.interest-btn');
+        // Auto-play gallery with faster interval
+        let autoPlayInterval;
+        
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                changeImage(1);
+            }, 3000); // Faster auto-play - every 3 seconds
+        }
+        
+        function stopAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+            }
+        }
+
+        // Modal functionality
+        function openModal() {
+            document.getElementById('interestModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('interestModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
             const modal = document.getElementById('interestModal');
-            const closeBtn = document.querySelector('.close-btn');
-            const form = document.getElementById('interestForm');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Form submission
+        function submitForm(event) {
+            event.preventDefault();
             
-            if (interestBtn) {
-                interestBtn.addEventListener('click', function() {
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                });
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Show success toast
+            showToast();
+            
+            // Close modal
+            closeModal();
+            
+            // Reset form
+            event.target.reset();
+            
+            // In real implementation, you would send data to server
+            console.log('Form data:', data);
+        }
+
+        // Toast notification
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Phone number validation
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 9) {
+                value = value.substring(0, 9);
+            }
+            e.target.value = value;
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Project Pin functions
+        function showProjectPin() {
+            document.getElementById('projectPin').style.display = 'block';
+        }
+
+        function hideProjectPin() {
+            document.getElementById('projectPin').style.display = 'none';
+        }
+
+        // Image Zoom functionality
+        function openImageZoom(imageSrc, unitId) {
+            console.log('Opening image zoom for:', unitId, imageSrc);
+            
+            const modal = document.getElementById('imageZoomModal');
+            const image = document.getElementById('zoomImage');
+            const title = document.getElementById('zoomModalTitle');
+            const unitNumber = document.getElementById('zoomUnitNumber');
+            const unitDescription = document.getElementById('zoomUnitDescription');
+            
+            if (!modal || !image) {
+                console.error('Modal elements not found');
+                return;
             }
             
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function() {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                });
+            image.src = imageSrc;
+            
+            if (unitId === 'unit1') {
+                title.textContent = 'تفاصيل الوحدة - فيلا 01';
+                unitNumber.textContent = 'فيلا 01';
+                unitDescription.textContent = 'فيلا 01 على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.';
+            } else if (unitId === 'unit2') {
+                title.textContent = 'تفاصيل الوحدة - فيلا 02';
+                unitNumber.textContent = 'فيلا 02';
+                unitDescription.textContent = 'فيلا 02 على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.';
             }
             
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            console.log('Image zoom modal opened successfully');
+        }
+
+        function closeImageZoom() {
+            console.log('Closing image zoom modal');
+            const modal = document.getElementById('imageZoomModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Floor plan selection
+        function selectFloorPlan(index) {
+            const floorPlanItems = document.querySelectorAll('.floor-plan-item');
+            const mainImage = document.getElementById('mainFloorPlanImage');
+            
+            // Remove active class from all items
+            floorPlanItems.forEach(item => item.classList.remove('active'));
+            
+            // Add active class to selected item
+            floorPlanItems[index].classList.add('active');
+            
+            // Update main image based on selection
+            const floorPlanImages = [
+                'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDZFFE4D2S557DS41NM9TR.png',
+                'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDYFCQVPVW7XMTJZTGCD08.png',
+                'https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDZFFE4D2S557DS41NM9TR.png'
+            ];
+            
+            mainImage.src = floorPlanImages[index];
+        }
+
+        // Unit Modal functionality
+        function openUnitModal(unitId) {
+            const modal = document.getElementById('unitModal');
+            const title = document.getElementById('unitModalTitle');
+            const unitNumberText = document.getElementById('unitNumberText');
+            const unitDescription = document.getElementById('unitDescriptionModal');
+            
+            if (unitId === 'unit1') {
+                title.textContent = 'تفاصيل الوحدة - فيلا 01';
+                unitNumberText.textContent = 'فيلا 01';
+                unitDescription.textContent = 'فيلا 01 على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.';
+            } else if (unitId === 'unit2') {
+                title.textContent = 'تفاصيل الوحدة - فيلا 02';
+                unitNumberText.textContent = 'فيلا 02';
+                unitDescription.textContent = 'فيلا 02 على مساحة 200 م² على شارع 15 غرب، ومسطح بناء 361 م في موقع استثنائي داخل حي المروج، أحد الأحياء النابضة في وسط مدينة الرياض بمميزات عالية وتشطيبات فاخرة.';
+            }
+            
+            // Reset to first floor plan
+            selectFloorPlan(0);
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUnitModal() {
+            document.getElementById('unitModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('تحميل الصفحة - بدء تهيئة المعرض');
+            
+            // Initialize gallery
+            initializeGallery();
+            
+            // Initialize touch events
+            initializeTouchEvents();
+            
+            // Start auto-play
+            startAutoPlay();
+            
+            // Add loading animation to images
+            if (images && images.length > 0) {
+                images.forEach(img => {
+                    img.addEventListener('load', function() {
+                        this.style.opacity = '1';
+                    });
+                });
+            }
+
+            // Auto show pin after 2 seconds
+            setTimeout(() => {
+                showProjectPin();
+            }, 2000);
+
+            // Initialize phone input validation
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 9) {
+                        value = value.substring(0, 9);
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // Initialize animated elements observer
+            const animatedElements = document.querySelectorAll('.unit-card, .feature-item-small, .warranty-item-small, .place-item');
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Handle keyboard navigation for gallery
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                changeImage(1); // Next image (RTL)
+                stopAutoPlay();
+                setTimeout(startAutoPlay, 2000);
+            } else if (e.key === 'ArrowRight') {
+                changeImage(-1); // Previous image (RTL)
+                stopAutoPlay();
+                setTimeout(startAutoPlay, 2000);
+            } else if (e.key === 'Escape') {
+                closeModal();
+                closeUnitModal();
+                closeImageZoom();
+            }
+        });
+
+        // Touch/swipe support for mobile gallery
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function initializeTouchEvents() {
+            const gallery = document.querySelector('.image-gallery');
+            
+            if (gallery) {
+                gallery.addEventListener('touchstart', function(e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                    stopAutoPlay(); // Stop auto-play when user interacts
+                });
+
+                gallery.addEventListener('touchend', function(e) {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                    
+                    // Restart auto-play after 2 seconds
+                    setTimeout(() => {
+                        startAutoPlay();
+                    }, 2000);
+                });
+            }
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - next image
+                    changeImage(1);
+                } else {
+                    // Swipe right - previous image
+                    changeImage(-1);
+                }
+            }
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Close unit modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const unitModal = document.getElementById('unitModal');
+            const imageZoomModal = document.getElementById('imageZoomModal');
+            
+            if (event.target === unitModal) {
+                closeUnitModal();
+            }
+            
+            if (event.target === imageZoomModal) {
+                closeImageZoom();
+            }
+        });
+
+        // Enhanced form validation
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('#interestForm [required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                const value = field.value.trim();
+                
+                if (!value) {
+                    isValid = false;
+                    field.style.borderColor = '#dc3545';
+                } else {
+                    field.style.borderColor = '#dee2e6';
+                }
+                
+                // Email validation
+                if (field.type === 'email' && value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        isValid = false;
+                        field.style.borderColor = '#dc3545';
+                    }
+                }
+                
+                // Phone validation
+                if (field.type === 'tel' && value) {
+                    if (value.length < 9) {
+                        isValid = false;
+                        field.style.borderColor = '#dc3545';
+                    }
                 }
             });
             
-            // Handle form submission
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Get form data
-                    const formData = new FormData(form);
-                    const data = Object.fromEntries(formData);
-                    
-                    // Close modal
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                    
-                    // Show success message
-                    showToast('تم تسجيل اهتمامك بنجاح! سيتواصل معك فريقنا قريباً 🎉');
-                    
-                    // Reset form
-                    form.reset();
-                });
-            }
+            return isValid;
         }
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toast-message');
+        // Add loading states
+        function addLoadingState(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+            button.disabled = true;
             
-            if (toast && toastMessage) {
-                toastMessage.textContent = message;
-                toast.classList.add('show');
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
-            }
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }, 2000);
         }
 
-        // Auto slide images every 8 seconds
-        setInterval(() => {
-            changeImage(1);
-        }, 8000);
+        function showErrorToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = message + ' <i class="fas fa-exclamation"></i>';
+            toast.style.background = '#dc3545';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.style.background = '#000';
+                toast.innerHTML = 'تم تسجيل اهتمامك بنجاح! <i class="fas fa-check"></i>';
+            }, 3000);
+        }
     </script>
 </body>
 </html>
