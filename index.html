@@ -1123,6 +1123,56 @@
             color: #000;
         }
 
+        /* Reserved Badge */
+        .reserved-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b35;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            animation: pulse-reserved 2s infinite;
+        }
+
+        @keyframes pulse-reserved {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Reserved Unit Overlay */
+        .unit-card:has(.reserved-badge) {
+            position: relative;
+            opacity: 0.7;
+        }
+
+        .unit-card:has(.reserved-badge)::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .unit-card:has(.reserved-badge) .reserved-badge {
+            z-index: 15;
+        }
+
+        .unit-card:has(.reserved-badge) .unit-info {
+            position: relative;
+            z-index: 2;
+        }
+
         /* Content Sections */
         .features-warranties-section, .location-section {
             margin-top: 40px;
@@ -2799,6 +2849,7 @@
                         <div class="unit-card">
                             <div class="unit-image" onclick="openImageZoom('https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDYFCQVPVW7XMTJZTGCD08.png', 'unit2')">
                                 <img src="https://fls-9ea20a57-aa90-4fb3-be13-1a37bcb31bde.laravel.cloud/01JXJDYFCQVPVW7XMTJZTGCD08.png" alt="مخطط الفيلا 02">
+                                <div class="reserved-badge">محجوز</div>
                             </div>
                             <div class="unit-info">
                                 <div class="unit-header">
