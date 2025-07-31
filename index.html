@@ -391,12 +391,12 @@
             background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
             border: 1px solid #ccc;
             border-radius: 12px;
-            padding: 15px;
-            margin: 0 20px 20px 20px;
+            padding: 20px;
+            margin: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
             text-align: center;
         }
 
@@ -415,38 +415,53 @@
         }
 
         .price-amount {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 15px;
         }
 
         .price-amount .sar-icon {
             width: 16px;
             height: 16px;
-            background: #000;
+            background: white;
+            border: 1px solid #000;
             border-radius: 3px;
+            position: relative;
+        }
+
+        .price-amount .sar-icon::after {
+            content: '﷼';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 10px;
+            font-weight: bold;
         }
 
         .interest-btn-main {
-            width: 100%;
+            width: 60%;
             background: #000;
             color: white;
             border: none;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 0.8rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
+            min-height: 35px;
+            margin: 0 auto;
         }
 
         .interest-btn-main:hover {
@@ -622,12 +637,17 @@
 
         .project-description {
             font-size: 1rem;
-            line-height: 1.7;
+            line-height: 1.8;
             color: #555;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 25px;
             background: #f8f9fa;
             border-radius: 10px;
+            text-align: justify;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* Unit Cards */
@@ -925,8 +945,21 @@
         .zoom-price-section .price-value .sar-icon {
             width: 20px;
             height: 20px;
-            background: #000;
+            background: white;
+            border: 1px solid #000;
             border-radius: 3px;
+            position: relative;
+        }
+
+        .zoom-price-section .price-value .sar-icon::after {
+            content: '﷼';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         .zoom-buttons {
@@ -1048,10 +1081,21 @@
         .unit-price .sar-icon {
             width: 18px;
             height: 18px;
-            background-image: url('https://riva.sa/frontend/img/SaudiRiyal.svg');
-            background-size: contain;
-            background-repeat: no-referrer;
-            background-position: center;
+            background: white;
+            border: 1px solid #000;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .unit-price .sar-icon::after {
+            content: '﷼';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 11px;
+            font-weight: bold;
         }
 
         .unit-specs {
@@ -1103,13 +1147,6 @@
             min-height: 300px;
         }
 
-        .section-divider {
-            width: 1px;
-            height: 100%;
-            background: #e9ecef;
-            min-height: 300px;
-        }
-
         .features-column h3, .warranties-column h3 {
             text-align: center;
             color: #333;
@@ -1128,13 +1165,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
-            padding: 12px;
+            gap: 8px;
+            padding: 15px 8px;
             background: #f8f9fa;
             border-radius: 10px;
             border: 1px solid #e9ecef;
             transition: all 0.3s ease;
             text-align: center;
+            min-height: 120px;
+            justify-content: center;
         }
 
         .feature-item-small:hover {
@@ -1165,6 +1204,7 @@
             color: #333;
             font-weight: 500;
             text-align: center;
+            line-height: 1.3;
         }
 
         /* Small Warranties Grid */
@@ -1179,12 +1219,14 @@
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            padding: 12px;
+            padding: 15px 8px;
             background: #f8f9fa;
             border-radius: 10px;
             border: 1px solid #e9ecef;
             transition: all 0.3s ease;
             text-align: center;
+            min-height: 120px;
+            justify-content: center;
         }
 
         .warranty-item-small:hover {
@@ -1216,6 +1258,7 @@
             font-weight: 500;
             flex: 1;
             text-align: center;
+            line-height: 1.3;
         }
 
         .warranty-duration-small {
@@ -1225,6 +1268,7 @@
             background: rgba(0,0,0,0.1);
             border-radius: 6px;
             white-space: nowrap;
+            margin-top: auto;
         }
 
         /* Location Section */
@@ -1624,8 +1668,21 @@
         .sar-icon {
             width: 16px;
             height: 16px;
-            background: #000;
+            background: white;
+            border: 1px solid #000;
             border-radius: 2px;
+            position: relative;
+        }
+
+        .sar-icon::after {
+            content: '﷼';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 10px;
+            font-weight: bold;
         }
 
         .phone-input .form-control {
@@ -1991,8 +2048,21 @@
         .unit-price-section .price-value .sar-icon {
             width: 20px;
             height: 20px;
-            background: #000;
+            background: white;
+            border: 1px solid #000;
             border-radius: 3px;
+            position: relative;
+        }
+
+        .unit-price-section .price-value .sar-icon::after {
+            content: '﷼';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         /* Responsive Unit Modal */
@@ -2651,7 +2721,7 @@
                     <div class="price-label">السعر</div>
                     <div class="price-amount" style="color: #000 !important;">
                         <span style="color: #000 !important;">3,700,000</span>
-                        <div class="sar-icon" style="background: #000 !important;"></div>
+                        <div class="sar-icon" style="background: white !important; border: 1px solid #000 !important;"></div>
                     </div>
                     <button class="interest-btn-main" onclick="openModal()" style="background: #000 !important;">
                         <i class="fas fa-fire"></i>
@@ -3391,13 +3461,12 @@
             console.log('الصورة الحالية:', currentImageIndex + 1);
         }
 
-        // Auto-play gallery with faster interval
+        // Auto-play gallery - DISABLED
         let autoPlayInterval;
         
         function startAutoPlay() {
-            autoPlayInterval = setInterval(() => {
-                changeImage(1);
-            }, 3000); // Faster auto-play - every 3 seconds
+            // Auto-play disabled
+            return;
         }
         
         function stopAutoPlay() {
@@ -3589,8 +3658,8 @@
             // Initialize touch events
             initializeTouchEvents();
             
-            // Start auto-play
-            startAutoPlay();
+            // Auto-play disabled
+            // startAutoPlay();
             
             // Add loading animation to images
             if (images && images.length > 0) {
@@ -3634,11 +3703,11 @@
             if (e.key === 'ArrowLeft') {
                 changeImage(1); // Next image (RTL)
                 stopAutoPlay();
-                setTimeout(startAutoPlay, 2000);
+                // setTimeout(startAutoPlay, 2000); - Auto-play disabled
             } else if (e.key === 'ArrowRight') {
                 changeImage(-1); // Previous image (RTL)
                 stopAutoPlay();
-                setTimeout(startAutoPlay, 2000);
+                // setTimeout(startAutoPlay, 2000); - Auto-play disabled
             } else if (e.key === 'Escape') {
                 closeModal();
                 closeUnitModal();
@@ -3663,10 +3732,10 @@
                     touchEndX = e.changedTouches[0].screenX;
                     handleSwipe();
                     
-                    // Restart auto-play after 2 seconds
-                    setTimeout(() => {
-                        startAutoPlay();
-                    }, 2000);
+                    // Auto-play disabled
+                    // setTimeout(() => {
+                    //     startAutoPlay();
+                    // }, 2000);
                 });
             }
         }
@@ -3778,3 +3847,4 @@
     </script>
 </body>
 </html>
+                
