@@ -1145,34 +1145,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Reserved Unit Overlay */
-        .unit-card:has(.reserved-badge) {
-            position: relative;
-            opacity: 0.7;
-        }
-
-        .unit-card:has(.reserved-badge)::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .unit-card:has(.reserved-badge) .reserved-badge {
-            z-index: 15;
-        }
-
-        .unit-card:has(.reserved-badge) .unit-info {
-            position: relative;
-            z-index: 2;
-        }
-
         /* Content Sections */
         .features-warranties-section, .location-section {
             margin-top: 40px;
