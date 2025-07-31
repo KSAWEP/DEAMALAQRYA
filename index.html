@@ -390,14 +390,15 @@
         .price-interest-section {
             background: linear-gradient(135deg, #f0f0f0, #e8e8e8);
             border: 1px solid #ccc;
-            border-radius: 12px;
+            border-radius: 0 0 15px 15px;
             padding: 20px;
-            margin: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin: 0;
+            box-shadow: none;
             display: flex;
             flex-direction: column;
             gap: 15px;
             text-align: center;
+            border-top: 2px solid #ddd;
         }
 
         .price-display {
@@ -480,6 +481,7 @@
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             order: 1;
+            border: 2px solid #e0e0e0;
         }
 
         .main-content-area {
@@ -491,6 +493,7 @@
             position: relative;
             height: 400px;
             overflow: hidden;
+            border-radius: 15px 15px 0 0;
         }
 
         .gallery-main {
@@ -2356,9 +2359,10 @@
             }
 
             .price-interest-section {
-                margin: 15px;
+                margin: 0;
                 padding: 15px;
                 gap: 12px;
+                border-radius: 0 0 15px 15px;
             }
 
             .price-display {
